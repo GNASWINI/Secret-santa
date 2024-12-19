@@ -6,14 +6,24 @@ from sqlalchemy import MetaData
 from datetime import datetime
 from flask_socketio import SocketIO
 from waitress import serve
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
+from dotenv import load_dotenv
+import os
+from redis import Redis
+
+load_dotenv()
 
 app = Flask(__name__)
 app.jinja_env.auto_reload = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ciapuser:ciapuser%40123@inblramstooldev/postgres'
-app.config['SECRET_KEY'] = 'sairam9866'
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SESSION_TYPE'] = os.getenv('SESSION_TYPE')
+app.config['DEBUG'] = False
+app.config['FLASK_ENV'] = os.getenv('FLASK_ENV')
+app.config['SESSION_REDIS'] = Redis.from_url(os.getenv('REDIS_URL'))
+app.config['SESSION_USE_SIGNER'] = True
+
 db = SQLAlchemy(app)
 Session(app)
 socketio = SocketIO(app)

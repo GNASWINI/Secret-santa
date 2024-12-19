@@ -1,3 +1,5 @@
 flask_session
 log
 games_env
+_pycache_
+.env
