@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" />
+    <style>
+        body {
+            /* background-image: url('https://as1.ftcdn.net/v2/jpg/06/64/65/22/1000_F_664652216_RLzp0392vhQFrCTFGREiMWRXPZ5StBa0.jpg'); */
+            background-image: url('/static/images/1000_F_664652216_RLzp0392vhQFrCTFGREiMWRXPZ5StBa0.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* background-color: #f0f0f0; */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 300px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            position: fixed;
+            /* top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); */
+            /* background-color: #fff; */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        form {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        label[for="userid"] {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: aquamarine;
+            padding: 10px 0;
+            /* Add vertical padding */
+        }
+
+        h1 {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Let's Find our Secret Santa</h1>
+    <div class="login-container">
+        <form action="{{ url_for('login') }}" method="post">
+            <label for="userid">User ID:</label>
+            <input type="text" name="userid" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>

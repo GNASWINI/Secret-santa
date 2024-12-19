@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Santa</title>
+    <style>
+        body {
+            background-image: url('/static/images/shutterstock_1260074089.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* Falling Gift Boxes */
+        @keyframes fall {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        .giftbox {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background: red;
+            animation: fall 5s linear infinite;
+            opacity: 0.5;
+            transform: rotate(45deg);
+        }
+
+        .giftbox1 {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .giftbox2 {
+            left: 20%;
+            animation-delay: 0.5s;
+        }
+
+        .giftbox3 {
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .giftbox4 {
+            left: 40%;
+            animation-delay: 1.5s;
+        }
+
+        .giftbox5 {
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .giftbox6 {
+            left: 60%;
+            animation-delay: 2.5s;
+        }
+
+        .giftbox7 {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .giftbox8 {
+            left: 80%;
+            animation-delay: 3.5s;
+        }
+
+        .attractive-heading {
+            font-size: 3em;
+            color: #ff0000;
+            text-shadow: 2px 2px #ff0000;
+        }
+
+        .attractive-link {
+            font-size: 1.5em;
+            color: #ffffff;
+            text-decoration: none;
+            background: linear-gradient(to right, #ff0000, #0000ff);
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: background 0.5s ease;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .attractive-link:hover {
+            /* color: #00ff00; */
+            background: linear-gradient(to right, #0000ff, #ff0000);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <img class="giftbox giftbox1"
+        src="/static/images/gift-box.jpg">
+    <img class="giftbox giftbox2"
+        src="/static/images/gift-box-with-magical-shining-blue-open-gift-box-with-magical-light_717440-2519.avif">
+    <img class="giftbox giftbox3" src="/static/images/giftboxpng.parspng.com-3.webp">
+    <img class="giftbox giftbox4"
+        src="/static/images/pngtree-ballon-birthday-party-clipart-vector-png-element-png-image_2212724.jpg">
+    <img class="giftbox giftbox5" src="/static/images/Snowflake_Closeup_Header_-_1140x641.avif">
+    <img class="giftbox giftbox6" src="/static/images/gift-box.jpg">
+    <img class="giftbox giftbox7"
+    src="/static/images/gift-box-with-magical-shining-blue-open-gift-box-with-magical-light_717440-2519.avif">
+    <img class="giftbox giftbox8" src="/static/images/giftboxpng.parspng.com-3.webp">
+    <h1 class="attractive-heading">
+        <center>Secret Santa</center>
+    </h1>
+    <br>
+    <!-- <a href="{{ url_for('assign_santa') }}"><button>Assign Secret Santas</button></a> -->
+    <br>
+    <a href="{{ url_for('login') }}" class="attractive-link">Follow me</a>
+    <br>
+    {% with message = get_flashed_messages() %}
+    {% if message %}
+    <p>{{ message[0] }}</p>
+    {% endif %}
+    {% endwith %}
+</body>
+
+</html>

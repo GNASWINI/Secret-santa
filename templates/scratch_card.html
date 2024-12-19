@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Santa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            /* background: url('https://images.squarespace-cdn.com/content/v1/5f4549ff0e9063196b3a5ea3/42307afd-d635-4708-8334-fa31d6f20000/SSG-home-image2.jpg') no-repeat center center fixed; */
+            background: url('/static/images/SSG-home-image2.jpg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            text-align: center;
+            color: #333;
+            /* color: #fff; */
+
+            /* background-color: #f0f0f0;
+            text-align: center; */
+        }
+
+        h1,
+        h2 {
+            color: #333;
+            /* font-size: 2.5em; */
+            /* color: #fff; */
+        }
+
+        .countdown {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        .scratch-card-wrapper {
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            /* height: 100vh; */
+        }
+
+        .scratch-card {
+            /* background-color: rgb(57, 207, 119); */
+            background-color: skyblue;
+            padding: 30px;
+            /* increased from 20 to 30*/
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            font-size: 18px;
+            /* width: 50%; */
+            width: 300px;
+            /* display: none;  Initially hide the scratch card */
+        }
+
+        .normal-content {
+            display: block;
+        }
+
+        .hover-content {
+            display: none;
+        }
+
+        .scratch-card:hover .normal-content {
+            display: none;
+        }
+
+        .scratch-card:hover .hover-content {
+            display: block;
+        }
+
+        .highlight {
+            background-color: rgba(246, 241, 241, 0.041);
+            /* Change to the color you prefer */
+            color: violet;
+            /* Change to the color you prefer */
+        }
+
+        .highlight:hover {
+            background-color: brown;
+            /* Change to the color you prefer */
+            color: black;
+            /* Change to the color you prefer */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Let's Start Our Game</h1>
+    <div class="countdown">Know your secret santa in: <span id="timer"></span></div>
+    {% if santa_name %}
+    <div class="scratch-card-wrapper">
+        <div class="scratch-card">
+            <p class="normal-content">Hover over me to know your christmas friend</p>
+            <p class="hover-content">You are Secret Santa for: {{ santa_name }}</p>
+            <p class="hover-content">Wishlist: {{ santa_wishlist }}</p>
+            <p class="hover-content">Address: {{ santa_address }}</p>
+        </div>
+    </div>
+    {% else %}
+    <p>No Secret Santa information available.</p>
+    {% endif %}
+
+
+    <!-- Display received messages -->
+    <h3>Received Messages</h3>
+    {% for message in messages_received %}
+    <div>
+        <!-- <p><strong>From: {{ message.sender }}</strong></p> -->
+        <p><strong>From: Santa</strong></p>
+        <p>{{ message.content }}</p>
+        <form method="POST" action="{{ url_for('send_message') }}">
+            <input type="hidden" name="recipient" value="{{ message.sender }}">
+            <input type="text" name="content" placeholder="Reply..." required>
+            <button type="submit">Reply</button>
+        </form>
+    </div>
+    {% endfor %}
+
+    <!-- Display sent messages -->
+    <h3>Sent Messages</h3>
+    {% for message in messages_sent %}
+    <div>
+        <!-- <p><strong>To: {{ message.recipient }}</strong></p> -->
+        <!-- <p><strong>To: </strong></p> -->
+        <p>{{ message.content }}</p>
+    </div>
+    {% endfor %}
+
+
+    <!-- Add a form to submit new messages -->
+    <form action="{{ url_for('send_message') }}" method="post">
+        <label for="recipient" class="highlight">Recipient:</label>
+        <input type="text" name="recipient" required>
+        <!-- <input type="text" name="recipient" value="{{santa_name}} " readonly required> -->
+        <br>
+        <label for="content" class="highlight">Message:</label>
+        <textarea name="content" required></textarea>
+        <br>
+        <button type="submit" class="highlight">Send Message</button>
+    </form>
+
+    <script>
+        var countDownDate = new Date("Jan 6, 2025 00:00:00").getTime();
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+
+</body>
+
+</html>
